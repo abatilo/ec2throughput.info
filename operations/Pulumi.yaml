@@ -1,0 +1,5 @@
+name: ec2throughput
+runtime: nodejs
+description: A website for seeing ec2 throughput information
+backend:
+  url: s3://abatilo/infra/ec2throughput

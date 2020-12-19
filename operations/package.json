@@ -1,0 +1,12 @@
+{
+  "name": "ec2throughput",
+  "devDependencies": {
+    "@types/node": "^10.0.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^3.21.0",
+    "@pulumi/docker": "^2.5.0",
+    "@pulumi/kubernetes": "^2.7.4",
+    "@pulumi/pulumi": "^2.0.0"
+  }
+}
