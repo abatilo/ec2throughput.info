@@ -5,7 +5,7 @@ using the phrase "up to". For the longest thing, I always thought this meant
 that performance would match that number but might possibly drop temporarily.
 
 After doing some research, I came across [this Twitter thread by
-@dvasallo](https://twitter.com/dvassallo/status/1120171727399448576).
+@dvassallo](https://twitter.com/dvassallo/status/1120171727399448576).
 Apparently, my misunderstanding is much more common than I thought. There
 appears to actually be a credit system of sorts and the listed "up to" value is
 actually best case scenario. Once best case usage is sustained for too long,

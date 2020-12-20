@@ -44,7 +44,7 @@ const Home = ({ instanceResults }: Props) => {
               It's significantly smaller than the rating, and it can be reached
               in just a few minutes."
             </blockquote>
-            <figcaption>-- Daniel Vassallo (@dvassalo)</figcaption>
+            <figcaption>-- Daniel Vassallo (@dvassallo)</figcaption>
           </a>
         </section>
         <div className="flex flex-col mx-8 mx-auto">
@@ -121,7 +121,7 @@ const Home = ({ instanceResults }: Props) => {
             href="https://twitter.com/dvassallo/status/1120171727399448576"
             className="font-semibold text-yellow-600 hover:text-yellow-500"
           >
-            @dvasallao Twitter thread
+            @dvassallo Twitter thread
           </a>{" "}
           and{" "}
           <a
