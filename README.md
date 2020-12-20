@@ -32,6 +32,8 @@ Pulumi code. I run iperf3 on two machines that are placed in the same
 availability zone in AWS. These tests run for an hour and we store the
 information in S3.
 
-## TODO
-
-There still needs to be a website to actually consume the information.
+The website at [https://ec2throughput.info](https://ec2throughput.info) is
+hosted on Vercel. Whenever a new iperf3 test is complete, the build process is
+kicked off where the website bundle will download the latest data we have for
+each instance type and will convert that into a static, client side only
+website.
