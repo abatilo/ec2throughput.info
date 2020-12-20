@@ -1,3 +1,4 @@
+import Head from "next/head";
 import aws, { S3 } from "aws-sdk";
 
 type PerInstanceProps = {
@@ -14,6 +15,19 @@ type Props = {
 const Home = ({ instanceResults }: Props) => {
   return (
     <div className="min-h-screen px-4 py-2 bg-gray-200">
+      <Head>
+        <title>EC2Throughput</title>
+        <meta
+          name="description"
+          content="EC2Throughput tells you what it means when an EC2 instance says up to a certain network performance"
+        />
+        <meta
+          name="keywords"
+          content="aws, ec2, network, throughput, bandwidth, performance"
+        />
+        <meta name="author" content="Aaron Batilo" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <h1 className="text-4xl font-extrabold text-yellow-600">
         EC2Throughput.info
       </h1>
