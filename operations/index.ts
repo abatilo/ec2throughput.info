@@ -10,10 +10,9 @@ const safeClientInstanceType = clientInstanceType.apply((s) =>
   s.replace(".", "-")
 );
 
-// m5n.8xlarge was picked because it is the cheapest instance marked for
-// consistent 25 Gbps network performance.
-// According to: https://ec2instances.info/
-const serverInstanceType = "m5n.8xlarge";
+// c5.18xlarge to match:
+// https://cloudonaut.io/ec2-network-performance-cheat-sheet/
+const serverInstanceType = "c5.18xlarge";
 
 // IAM role for writing results into S3
 const role = new aws.iam.Role("ec2t-role", {
