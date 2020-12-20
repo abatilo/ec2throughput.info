@@ -1,4 +1,4 @@
-import { S3 } from "aws-sdk";
+import aws, { S3 } from "aws-sdk";
 
 type PerInstanceProps = {
   instanceType: string;
@@ -30,6 +30,14 @@ const Home = ({ instanceResults }: Props) => {
 };
 
 export async function getStaticProps() {
+  // Custom env vars take precedence
+  // https://vercel.com/knowledge/how-can-i-use-aws-sdk-environment-variables-on-vercel
+  aws.config.update({
+    accessKeyId: process.env.ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey:
+      process.env.SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY,
+  });
+
   const s3Client = new S3({ region: "us-east-1" });
 
   const res = await new Promise((resolve, reject) => {
