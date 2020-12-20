@@ -134,8 +134,8 @@ const Home = ({ instanceResults }: Props) => {
         </p>
         <p>
           <br />
-          If you'd like to help pay for other tests, I'd be grateful for a
-          donation of any amount{" "}
+          If you'd like to help pay for other tests/instance types, I'd be
+          grateful for a donation of any amount{" "}
           <a
             href="https://www.paypal.me/abatilo"
             className="font-semibold text-yellow-600 hover:text-yellow-500"
