@@ -38,11 +38,11 @@ const Home = ({ instanceResults }: Props) => {
         <section className="max-w-5xl p-2 mx-auto my-4 bg-yellow-500 rounded-lg">
           <a href="https://twitter.com/dvassallo/status/1120171727399448576?s=20">
             <blockquote className="italic">
-              TIL what EC2's "Up to" means. I used to think it simply indicates
+              "TIL what EC2's "Up to" means. I used to think it simply indicates
               best effort bandwidth, but apparently there's a hard baseline
               bottleneck for most EC2 instance types (those with an "up to").
               It's significantly smaller than the rating, and it can be reached
-              in just a few minutes.
+              in just a few minutes."
             </blockquote>
             <figcaption>-- Daniel Vassallo (@dvassalo)</figcaption>
           </a>
