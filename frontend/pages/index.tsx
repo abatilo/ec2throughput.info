@@ -40,7 +40,7 @@ const Home = ({ instanceResults }: Props) => {
             <blockquote className="italic">
               "TIL what EC2's 'Up to' means. I used to think it simply indicates
               best effort bandwidth, but apparently there's a hard baseline
-              bottleneck for most EC2 instance types (those with an "up to").
+              bottleneck for most EC2 instance types (those with an 'up to').
               It's significantly smaller than the rating, and it can be reached
               in just a few minutes."
             </blockquote>
