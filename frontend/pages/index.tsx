@@ -18,7 +18,7 @@ const Home = ({ instanceResults }: Props) => {
         EC2Throughput.info
       </h1>
       <h2 className="text-2xl ">
-        Find how much network "Up to" actually means
+        Find how much bandwidth "Up to" actually means
       </h2>
       <main>
         <section className="max-w-5xl p-2 mx-auto my-4 bg-yellow-500 rounded-lg">
