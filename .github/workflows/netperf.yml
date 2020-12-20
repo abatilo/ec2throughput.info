@@ -39,7 +39,7 @@ jobs:
 
       - name: Waiting for test to execute
         run: |
-          sleep 600
+          sleep 4500
 
       - name: Destroy stack
         working-directory: operations
