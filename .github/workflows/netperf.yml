@@ -54,4 +54,3 @@ jobs:
           vercel-project-id: ${{ secrets.PROJECT_ID}}
           vercel-args: "--prod"
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: ./frontend
