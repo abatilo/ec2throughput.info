@@ -27,7 +27,7 @@ jobs:
         run: |
           asdf install pulumi
 
-      - name: Deploy stack
+      - name: Run test for ${{ github.event.inputs.instanceType }}
         working-directory: operations
         run: |
           npm ci
