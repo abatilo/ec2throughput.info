@@ -129,7 +129,7 @@ apt-get install -yq iperf3 awscli jq;
 echo "Running client";
 iperf3 -c ${
   serverInstance.privateIp
-} --time 3600 --interval 30 --json --version4 -P 10 | jq -c '{start: .start, intervals: .intervals, end: .end }' | aws s3 cp - "s3://ec2throughput.info/results/${safeClientInstanceType}/${new Date()
+} --time 3600 --interval 60 --json --version4 -P 10 | jq -c '{intervals: .intervals}' | aws s3 cp - "s3://ec2throughput.info/results/${safeClientInstanceType}/${new Date()
   .toISOString()
   .slice(0, 10)}.json"
 `;
