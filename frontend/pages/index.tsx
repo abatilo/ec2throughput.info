@@ -64,13 +64,13 @@ const Home = ({ instanceResults }: Props) => {
                         scope="col"
                         className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                       >
-                        Baseline (10% quantile)
+                        Baseline (Maintained for 90% of an hour)
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                       >
-                        Burst (97% quantile)
+                        Burst (Maintained for 3% per hour)
                       </th>
                       <th
                         scope="col"
