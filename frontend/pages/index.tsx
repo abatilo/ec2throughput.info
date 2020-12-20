@@ -18,7 +18,7 @@ const Home = ({ instanceResults }: Props) => {
         {instanceResults.map((results) => {
           const { instanceType, lastUpdated, baseline, burst } = results;
           return (
-            <li>
+            <li key={instanceType}>
               {instanceType} has a baseline of {baseline} Gb/s and a burst of{" "}
               {burst} Gb/s and was last updated on {lastUpdated}.
             </li>
@@ -69,7 +69,8 @@ export async function getStaticProps() {
                     if (err) reject(err);
                     const bps = JSON.parse(data.Body.toString("utf-8"))
                       .intervals.map((i: any) => i.sum)
-                      .map((s: any) => s.bits_per_second / 1000000000);
+                      .map((s: any) => s.bits_per_second / 1000000000)
+                      .sort((a, b) => a - b);
 
                     resolve({
                       lastUpdated: Key.slice(
@@ -93,10 +94,8 @@ export async function getStaticProps() {
             );
           });
 
-          console.log(singleInstanceData);
           allInstanceData.push(singleInstanceData);
         }
-        console.log("after for loop");
         resolve(
           allInstanceData.sort((a, b) => {
             if (a.instanceType < b.instanceType) {
