@@ -30,6 +30,7 @@ jobs:
       - name: Deploy stack
         working-directory: operations
         run: |
+          npm ci
           pulumi login --cloud-url s3://abatilo/infra/ec2throughput
           pulumi stack init ${INSTANCE_TYPE} || pulumi stack select ${INSTANCE_TYPE}
           pulumi config set aws:region ${AWS_REGION}
