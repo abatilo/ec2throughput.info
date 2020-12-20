@@ -108,7 +108,7 @@ iperf3 -s --daemon --bind 0.0.0.0
 // The instance that will run the iperf server
 const serverInstance = new aws.ec2.Instance("server", {
   vpcSecurityGroupIds: [securityGroup.id],
-  availabilityZone: "us-east-1a", // Specify AZ so that we don't pay for transfer within same AZ.
+  availabilityZone: "us-west-2a", // Specify AZ so that we don't pay for transfer within same AZ.
   ami: ubuntu.then((ubuntu) => ubuntu.id),
   // instanceType: "m5n.8xlarge",
   instanceType: serverInstanceType,
@@ -136,7 +136,7 @@ const clientInstance = new aws.ec2.Instance(
   "client",
   {
     vpcSecurityGroupIds: [securityGroup.id],
-    availabilityZone: "us-east-1a", // Specify AZ so that we don't pay for transfer within same AZ.
+    availabilityZone: "us-west-2a", // Specify AZ so that we don't pay for transfer within same AZ.
     ami: ubuntu.then((ubuntu) => ubuntu.id),
     iamInstanceProfile: instanceProfile,
     instanceType: clientInstanceType,
