@@ -27,25 +27,25 @@ jobs:
         run: |
           asdf install pulumi
 
-      # - name: Run test for ${{ github.event.inputs.instanceType }}
-      #   working-directory: operations
-      #   run: |
-      #     npm ci
-      #     pulumi login --cloud-url s3://abatilo/infra/ec2throughput
-      #     pulumi stack init ${INSTANCE_TYPE} || pulumi stack select ${INSTANCE_TYPE}
-      #     pulumi config set aws:region ${AWS_REGION}
-      #     pulumi config set clientInstanceType ${INSTANCE_TYPE}
-      #     pulumi update --yes --skip-preview --suppress-outputs --suppress-permalink
+      - name: Run test for ${{ github.event.inputs.instanceType }}
+        working-directory: operations
+        run: |
+          npm ci
+          pulumi login --cloud-url s3://abatilo/infra/ec2throughput
+          pulumi stack init ${INSTANCE_TYPE} || pulumi stack select ${INSTANCE_TYPE}
+          pulumi config set aws:region ${AWS_REGION}
+          pulumi config set clientInstanceType ${INSTANCE_TYPE}
+          pulumi update --yes --skip-preview --suppress-outputs --suppress-permalink
 
-      # - name: Waiting for test to execute
-      #   run: |
-      #     sleep 4500
+      - name: Waiting for test to execute
+        run: |
+          sleep 4500
 
-      # - name: Destroy stack
-      #   working-directory: operations
-      #   run: |
-      #     pulumi destroy --yes
-      #     pulumi stack rm ${INSTANCE_TYPE} --yes
+      - name: Destroy stack
+        working-directory: operations
+        run: |
+          pulumi destroy --yes
+          pulumi stack rm ${INSTANCE_TYPE} --yes
 
       - uses: amondnet/vercel-action@v20
         with:
