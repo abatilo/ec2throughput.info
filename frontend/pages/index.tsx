@@ -154,9 +154,10 @@ const Home = ({ instanceResults }: Props) => {
             href="https://www.paypal.me/abatilo"
             className="font-semibold text-yellow-600 hover:text-yellow-500"
           >
-            on PayPal. One test costs usually between $3 - $10 depending on the
-            instance being tested.
-          </a>
+            on PayPal.
+          </a>{" "}
+          One test costs usually between $3 - $10 depending on the instance
+          being tested.
         </p>
       </footer>
     </div>
