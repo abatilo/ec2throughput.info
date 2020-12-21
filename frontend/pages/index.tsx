@@ -156,7 +156,7 @@ const Home = ({ instanceResults }: Props) => {
           >
             on PayPal.
           </a>{" "}
-          One test costs usually between $3 - $10 depending on the instance
+          One test typically costs between $3 - $6 depending on the instance
           being tested.
         </p>
       </footer>
