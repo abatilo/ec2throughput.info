@@ -1,11 +1,12 @@
 import Head from "next/head";
-import aws, { S3 } from "aws-sdk";
+import aws, { S3, Pricing } from "aws-sdk";
 
 type PerInstanceProps = {
   instanceType: string;
   lastUpdated: string;
   baseline: number;
   burst: number;
+  advertised: string;
 };
 
 type Props = {
@@ -76,6 +77,12 @@ const Home = ({ instanceResults }: Props) => {
                         scope="col"
                         className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                       >
+                        Advertised
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      >
                         Last Updated
                       </th>
                     </tr>
@@ -87,6 +94,7 @@ const Home = ({ instanceResults }: Props) => {
                         lastUpdated,
                         baseline,
                         burst,
+                        advertised,
                       } = results;
                       return (
                         <tr
@@ -101,6 +109,9 @@ const Home = ({ instanceResults }: Props) => {
                           </td>
                           <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {burst} Gigabits / second
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {advertised}
                           </td>
                           <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {lastUpdated}
@@ -177,6 +188,7 @@ export async function getStaticProps() {
   });
 
   const s3Client = new S3({ region: "us-east-1" });
+  const pricingClient = new Pricing({ region: "us-east-1" });
 
   const res = await new Promise((resolve, reject) => {
     s3Client.listObjectsV2(
@@ -206,7 +218,7 @@ export async function getStaticProps() {
                     Bucket: "ec2throughput.info",
                     Key,
                   },
-                  (err, data) => {
+                  async (err, data) => {
                     if (err) reject(err);
                     const bps = JSON.parse(data.Body.toString("utf-8"))
                       .intervals.map(
@@ -232,11 +244,43 @@ export async function getStaticProps() {
                       ].toFixed(3);
                     };
 
+                    const advertised = await new Promise((resolve, reject) => {
+                      pricingClient.getProducts(
+                        {
+                          ServiceCode: "AmazonEC2",
+                          Filters: [
+                            {
+                              Type: "TERM_MATCH",
+                              Field: "instanceType",
+                              Value: instanceType,
+                            },
+                            {
+                              Type: "TERM_MATCH",
+                              Field: "location",
+                              Value: "US East (N. Virginia)",
+                            },
+                          ],
+                          MaxResults: 1,
+                        },
+                        (err, data) => {
+                          if (err) reject(err);
+                          const { PriceList: priceList } = data;
+                          const {
+                            product: {
+                              attributes: { networkPerformance },
+                            },
+                          } = JSON.parse(JSON.stringify(priceList[0]));
+                          resolve(networkPerformance);
+                        }
+                      );
+                    });
+
                     resolve({
                       lastUpdated,
                       instanceType,
                       baseline: quantile(bps, 0.1),
                       burst: quantile(bps, 0.97),
+                      advertised,
                     });
                   }
                 );
