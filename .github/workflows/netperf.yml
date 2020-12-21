@@ -54,6 +54,8 @@ jobs:
       # Re-clone so that we deploy the latest version. In case changes were
       # made since the test was started an hour ago
       - uses: actions/checkout@v2.3.4
+        with:
+          ref: "main"
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
