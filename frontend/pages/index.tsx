@@ -187,14 +187,9 @@ export async function getStaticProps() {
       },
       async (err, data) => {
         if (err) reject(err);
-
         const { CommonPrefixes: prefixes } = data;
-        const instanceTypes = prefixes.map((p) =>
-          p.Prefix.slice(8, p.Prefix.length - 1).replace("-", ".")
-        );
 
         let allInstanceData = [];
-
         for (let i = 0; i < prefixes.length; i++) {
           const singleInstanceData = await new Promise((resolve, reject) => {
             s3Client.listObjectsV2(
@@ -214,25 +209,34 @@ export async function getStaticProps() {
                   (err, data) => {
                     if (err) reject(err);
                     const bps = JSON.parse(data.Body.toString("utf-8"))
-                      .intervals.map((i: any) => i.sum)
-                      .map((s: any) => s.bits_per_second / 1000000000)
-                      .sort((a, b) => a - b);
+                      .intervals.map(
+                        (i: any) => i.sum.bits_per_second / 1000000000
+                      )
+                      .sort((a: number, b: number) => a - b);
+
+                    const lastUpdated = Key.slice(
+                      Key.lastIndexOf("/") + 1,
+                      Key.lastIndexOf(".")
+                    );
+                    const instanceType = Key.slice(
+                      Key.indexOf("/") + 1,
+                      Key.lastIndexOf("/")
+                    ).replace("-", ".");
+
+                    const quantile = (
+                      numbers: number[],
+                      percentile: number
+                    ) => {
+                      return numbers[
+                        Math.floor(percentile * (bps.length + 1))
+                      ].toFixed(3);
+                    };
 
                     resolve({
-                      lastUpdated: Key.slice(
-                        Key.lastIndexOf("/") + 1,
-                        Key.lastIndexOf(".")
-                      ),
-                      instanceType: prefixes[i].Prefix.slice(
-                        8,
-                        prefixes[i].Prefix.length - 1
-                      ).replace("-", "."),
-                      baseline: bps[Math.floor(0.1 * (bps.length + 1))].toFixed(
-                        3
-                      ),
-                      burst: bps[Math.floor(0.97 * (bps.length + 1))].toFixed(
-                        3
-                      ),
+                      lastUpdated,
+                      instanceType,
+                      baseline: quantile(bps, 0.1),
+                      burst: quantile(bps, 0.97),
                     });
                   }
                 );
