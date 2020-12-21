@@ -255,6 +255,9 @@ export async function getStaticProps() {
                       ].toFixed(3);
                     };
 
+                    const baseline = quantile(bps, 0.1);
+                    const burst = quantile(bps, 0.97);
+
                     const { networkPerformance, price } = await new Promise(
                       (resolve, reject) => {
                         pricingClient.getProducts(
@@ -323,8 +326,8 @@ export async function getStaticProps() {
                     resolve({
                       lastUpdated,
                       instanceType,
-                      baseline: quantile(bps, 0.1),
-                      burst: quantile(bps, 0.97),
+                      baseline,
+                      burst,
                       advertised: networkPerformance,
                       price,
                     });
