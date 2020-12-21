@@ -21,7 +21,7 @@ get worse and it was never clear why that happened until now.
 Both listed resources have excel sheets with some numbers, but I wanted to
 throw together a website that made this information even more accessible and
 indexable. So that's what I'm doing! The name of the website:
-`ec2throughput.info` is taking direct inspiration from
+[ec2throughput.info](https://ec2throughput.info) is taking direct inspiration from
 [ec2instances.info](https://ec2instances.info/).
 
 ## Methodology
