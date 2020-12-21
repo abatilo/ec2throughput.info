@@ -7,6 +7,7 @@ type PerInstanceProps = {
   baseline: number;
   burst: number;
   advertised: string;
+  price: string;
 };
 
 type Props = {
@@ -83,6 +84,12 @@ const Home = ({ instanceResults }: Props) => {
                         scope="col"
                         className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
                       >
+                        Price OnDemand (USD in us-east-1)
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                      >
                         Last Updated
                       </th>
                     </tr>
@@ -95,6 +102,7 @@ const Home = ({ instanceResults }: Props) => {
                         baseline,
                         burst,
                         advertised,
+                        price,
                       } = results;
                       return (
                         <tr
@@ -112,6 +120,9 @@ const Home = ({ instanceResults }: Props) => {
                           </td>
                           <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {advertised}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            ${price} hourly
                           </td>
                           <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                             {lastUpdated}
@@ -244,43 +255,78 @@ export async function getStaticProps() {
                       ].toFixed(3);
                     };
 
-                    const advertised = await new Promise((resolve, reject) => {
-                      pricingClient.getProducts(
-                        {
-                          ServiceCode: "AmazonEC2",
-                          Filters: [
-                            {
-                              Type: "TERM_MATCH",
-                              Field: "instanceType",
-                              Value: instanceType,
-                            },
-                            {
-                              Type: "TERM_MATCH",
-                              Field: "location",
-                              Value: "US East (N. Virginia)",
-                            },
-                          ],
-                          MaxResults: 1,
-                        },
-                        (err, data) => {
-                          if (err) reject(err);
-                          const { PriceList: priceList } = data;
-                          const {
-                            product: {
-                              attributes: { networkPerformance },
-                            },
-                          } = JSON.parse(JSON.stringify(priceList[0]));
-                          resolve(networkPerformance);
-                        }
-                      );
-                    });
+                    const { networkPerformance, price } = await new Promise(
+                      (resolve, reject) => {
+                        pricingClient.getProducts(
+                          {
+                            ServiceCode: "AmazonEC2",
+                            Filters: [
+                              {
+                                Type: "TERM_MATCH",
+                                Field: "instanceType",
+                                Value: instanceType,
+                              },
+                              {
+                                Type: "TERM_MATCH",
+                                Field: "location",
+                                Value: "US East (N. Virginia)",
+                              },
+                              {
+                                Type: "TERM_MATCH",
+                                Field: "operatingSystem",
+                                Value: "Linux",
+                              },
+                              {
+                                Type: "TERM_MATCH",
+                                Field: "preInstalledSw",
+                                Value: "NA",
+                              },
+                              {
+                                Type: "TERM_MATCH",
+                                Field: "capacitystatus",
+                                Value: "Used",
+                              },
+                              {
+                                Type: "TERM_MATCH",
+                                Field: "tenancy",
+                                Value: "Shared",
+                              },
+                            ],
+                            MaxResults: 1,
+                          },
+                          (err, data) => {
+                            if (err) reject(err);
+
+                            const { PriceList: priceList } = data;
+                            const {
+                              terms: { OnDemand },
+                              product: {
+                                attributes: { networkPerformance },
+                              },
+                            } = JSON.parse(JSON.stringify(priceList[0]));
+
+                            const onDemandID = Object.keys(OnDemand)[0];
+                            const priceDimensionsID = Object.keys(
+                              OnDemand[onDemandID].priceDimensions
+                            )[0];
+
+                            const price =
+                              OnDemand[onDemandID].priceDimensions[
+                                priceDimensionsID
+                              ].pricePerUnit.USD;
+                            resolve({ networkPerformance, price });
+                          }
+                        );
+                      }
+                    );
 
                     resolve({
                       lastUpdated,
                       instanceType,
                       baseline: quantile(bps, 0.1),
                       burst: quantile(bps, 0.97),
-                      advertised,
+                      advertised: networkPerformance,
+                      price,
                     });
                   }
                 );
