@@ -89,7 +89,10 @@ const Home = ({ instanceResults }: Props) => {
                         burst,
                       } = results;
                       return (
-                        <tr className={i % 2 != 0 ? "bg-gray-50" : "bg-white"}>
+                        <tr
+                          key={instanceType}
+                          className={i % 2 != 0 ? "bg-gray-50" : "bg-white"}
+                        >
                           <td className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                             {instanceType}
                           </td>
