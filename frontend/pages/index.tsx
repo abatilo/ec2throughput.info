@@ -173,16 +173,14 @@ const Home = ({ instanceResults }: Props) => {
         </p>
         <p>
           <br />
-          If you'd like to help pay for other tests/instance types, I'd be
-          grateful for a donation of any amount{" "}
+          If you would like to support the website, consider{" "}
           <a
-            href="https://www.paypal.me/abatilo"
+            href="https://www.buymeacoffee.com/abatilo"
             className="font-semibold text-yellow-600 hover:text-yellow-500"
           >
-            on PayPal.
-          </a>{" "}
-          One test typically costs between $3 - $6 depending on the instance
-          being tested.
+            buying me a coffee
+          </a>
+          .
         </p>
       </footer>
     </div>
