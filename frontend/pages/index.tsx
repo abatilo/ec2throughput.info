@@ -1,5 +1,6 @@
 import Head from "next/head";
 import aws, { S3, Pricing } from "aws-sdk";
+import { useEffect } from "react";
 
 type PerInstanceProps = {
   instanceType: string;
@@ -15,6 +16,17 @@ type Props = {
 };
 
 const Home = ({ instanceResults }: Props) => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://scripts.simpleanalyticscdn.com/latest.js";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen px-4 py-2 bg-gray-200">
       <Head>
