@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Script from 'next/script'
 import aws, { S3, Pricing } from "aws-sdk";
 
 type PerInstanceProps = {
@@ -137,7 +136,6 @@ const Home = ({ instanceResults }: Props) => {
             </div>
           </div>
         </div>
-        <Script src="https://scripts.simpleanalyticscdn.com/latest.js" strategy="lazyOnLoad" />
       </main>
       <footer className="pt-6">
         <p>
