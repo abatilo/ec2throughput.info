@@ -18,7 +18,7 @@ type Props = {
 const Home = ({ instanceResults }: Props) => {
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = "https://scripts.simpleanalyticscdn.com/latest.js";
+    script.src = "https://sa.mentallyanimated.com/latest.js";
     script.async = true;
     script.defer = true;
     document.body.appendChild(script);
