@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.7",
+    "autoprefixer": "^10.4.8",
     "aws-sdk": "^2.1183.0",
     "date-fns": "^2.29.1",
     "gray-matter": "^4.0.3",
