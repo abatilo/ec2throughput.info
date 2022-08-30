@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.8",
-    "aws-sdk": "^2.1204.0",
+    "aws-sdk": "^2.1205.0",
     "date-fns": "^2.29.2",
     "gray-matter": "^4.0.3",
     "next": "^12.2.5",
